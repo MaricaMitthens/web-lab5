@@ -1,7 +1,17 @@
 <template>
   <div class="list">
     <button>New note</button>
-    <p></p>
+    <ul>
+      <li>
+        <h6>NAME</h6>
+      </li>
+      <li>
+        <h6>NAME2</h6>
+      </li>
+      <li>
+        <h6>NAME3</h6>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -27,13 +37,8 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 li {
-  display: inline-block;
-  margin: 0 10px;
+  text-align: left;
 }
 a {
   color: #42b983;
