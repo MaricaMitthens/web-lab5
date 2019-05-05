@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <NotesList msg="Welcome to notes list"/>
+    <NotesList v-bind:notes="notes"/>
     <NoteEditor msg="Welcome to editor"/>
   </div>
 </template>
@@ -8,12 +8,22 @@
 <script>
 import NotesList from "./components/NotesList.vue";
 import NoteEditor from "./components/NoteEditor.vue";
+import axios from "axios";
 
 export default {
   name: "app",
   components: {
     NotesList,
     NoteEditor
+  },
+  data: function() {
+    return {
+      notes: []
+    };
+  },
+  created: async function() {
+    const { data } = await axios.get("http://localhost:3001/notes");
+    this.notes = data;
   }
 };
 </script>

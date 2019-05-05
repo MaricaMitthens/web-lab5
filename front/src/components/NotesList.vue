@@ -2,14 +2,8 @@
   <div class="list">
     <button>New note</button>
     <ul>
-      <li>
-        <h6>NAME</h6>
-      </li>
-      <li>
-        <h6>NAME2</h6>
-      </li>
-      <li>
-        <h6>NAME3</h6>
+      <li v-for="note in notes" v-bind:key="note._id">
+        <p>{{note.name}}</p>
       </li>
     </ul>
   </div>
@@ -19,7 +13,7 @@
 export default {
   name: "NotesList",
   props: {
-    msg: String
+    notes: Array
   }
 };
 </script>
