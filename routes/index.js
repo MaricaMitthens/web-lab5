@@ -15,7 +15,8 @@ router.post('/notes', async function (req, res) {
 
 router.delete('/notes/:id', async function (req, res) {
   await Document.findByIdAndDelete(req.params.id);
-  res.json({ status: "success" })
+  var docs = await Document.find();
+  res.json(docs);
 });
 
 router.put('/notes/:id', async function (req, res) {

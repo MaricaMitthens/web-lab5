@@ -47,14 +47,16 @@ export default {
       console.log(note);
       this.curNote = note;
     },
-    delNote: async function(curNote) {
+    delNote: async function() {
       // eslint-disable-next-line
       console.log("in del");
-      const { status } = await axios.delete(
+      const { data } = await axios.delete(
         "http://localhost:3001/notes/" + this.curNote._id
       );
+      this.notes = data;
+      this.curNote = data[0];
       // eslint-disable-next-line
-      console.log(status);
+      console.log(data);
     }
   }
 };

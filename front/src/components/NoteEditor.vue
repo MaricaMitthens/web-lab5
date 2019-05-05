@@ -5,7 +5,7 @@
     <header v-if="isNotePassed">
       <input id="title" :value="name">
       <button id="put">SAVE</button>
-      <button id="del" v-on:click="delNote(curNote)">DELETE</button>
+      <button id="del" v-on:click="delNote()">DELETE</button>
     </header>
     <div v-if="isNotePassed" id="editor">
       <textarea :value="doc" @input="update"></textarea>
