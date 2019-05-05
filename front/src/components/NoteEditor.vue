@@ -3,8 +3,8 @@
 <template>
   <div class="editor">
     <header v-if="isNotePassed">
-      <input id="title" :value="name">
-      <button id="put">SAVE</button>
+      <input id="title" :value="name" @input="updateName">
+      <button id="put" v-on:click="updNote(name, doc)">SAVE</button>
       <button id="del" v-on:click="delNote()">DELETE</button>
     </header>
     <div v-if="isNotePassed" id="editor">
@@ -21,7 +21,7 @@ import _ from "lodash";
 
 export default {
   name: "NoteEditor",
-  props: ["note", "delNote"],
+  props: ["note", "delNote", "updNote"],
   data: function() {
     if (this.curNote) {
       return {
@@ -47,7 +47,10 @@ export default {
   methods: {
     update: _.debounce(function(e) {
       this.doc = e.target.value;
-    }, 300)
+    }, 300),
+    updateName: function(e) {
+      this.name = e.target.value;
+    }
   },
   watch: {
     note: function(note) {

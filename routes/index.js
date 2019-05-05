@@ -21,7 +21,8 @@ router.delete('/notes/:id', async function (req, res) {
 
 router.put('/notes/:id', async function (req, res) {
   var doc = await Document.findByIdAndUpdate(req.params.id, { name: req.body.name, doc: req.body.doc }, { new: true });
-  res.json(doc);
+  var docs = await Document.find();
+  res.json(docs);
 });
 
 module.exports = router;

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 
 var indexRouter = require('./routes/index');
-mongoose.connect('mongodb+srv://user1:user1@cluster0-i1mdy.mongodb.net/test?retryWrites=true', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://user1:user1@cluster0-i1mdy.mongodb.net/test?retryWrites=true', { useNewUrlParser: true, useFindAndModify: false });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

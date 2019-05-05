@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NotesList v-bind:notes="notes" v-bind:addNote="addNote" v-bind:openNote="openNote"/>
-    <NoteEditor v-bind:note="curNote" v-bind:delNote="delNote"/>
+    <NoteEditor v-bind:note="curNote" v-bind:delNote="delNote" v-bind:updNote="updNote"/>
   </div>
 </template>
 
@@ -26,13 +26,8 @@ export default {
     const { data } = await axios.get("http://localhost:3001/notes");
     this.notes = data;
     if (data.length) {
-      // eslint-disable-next-line
-      console.log("Length != 0");
       this.curNote = data[0];
     }
-
-    // eslint-disable-next-line
-    console.log(this.curNote);
   },
   methods: {
     addNote: async function() {
@@ -41,22 +36,24 @@ export default {
         doc: ""
       });
       this.notes.push(data);
+      this.curNote = data;
     },
     openNote: function(note) {
-      // eslint-disable-next-line
-      console.log(note);
       this.curNote = note;
     },
     delNote: async function() {
-      // eslint-disable-next-line
-      console.log("in del");
       const { data } = await axios.delete(
         "http://localhost:3001/notes/" + this.curNote._id
       );
       this.notes = data;
       this.curNote = data[0];
-      // eslint-disable-next-line
-      console.log(data);
+    },
+    updNote: async function(name, doc) {
+      const { data } = await axios.put(
+        "http://localhost:3001/notes/" + this.curNote._id,
+        { name, doc }
+      );
+      this.notes = data;
     }
   }
 };
