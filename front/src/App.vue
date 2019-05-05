@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <NotesList v-bind:notes="notes"/>
-    <NoteEditor msg="Welcome to editor"/>
+    <NotesList v-bind:notes="notes" v-bind:addNote="addNote" v-bind:openNote="openNote"/>
+    <NoteEditor v-bind:note="curNote" v-bind:delNote="delNote"/>
   </div>
 </template>
 
@@ -18,12 +18,44 @@ export default {
   },
   data: function() {
     return {
-      notes: []
+      notes: [],
+      curNote: null
     };
   },
   created: async function() {
     const { data } = await axios.get("http://localhost:3001/notes");
     this.notes = data;
+    if (data.length) {
+      // eslint-disable-next-line
+      console.log("Length != 0");
+      this.curNote = data[0];
+    }
+
+    // eslint-disable-next-line
+    console.log(this.curNote);
+  },
+  methods: {
+    addNote: async function() {
+      const { data } = await axios.post("http://localhost:3001/notes", {
+        name: "title",
+        doc: ""
+      });
+      this.notes.push(data);
+    },
+    openNote: function(note) {
+      // eslint-disable-next-line
+      console.log(note);
+      this.curNote = note;
+    },
+    delNote: async function(curNote) {
+      // eslint-disable-next-line
+      console.log("in del");
+      const { status } = await axios.delete(
+        "http://localhost:3001/notes/" + this.curNote._id
+      );
+      // eslint-disable-next-line
+      console.log(status);
+    }
   }
 };
 </script>

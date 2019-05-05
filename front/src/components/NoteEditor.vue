@@ -2,15 +2,16 @@
 
 <template>
   <div class="editor">
-    <header>
-      <input id="title" value="Title">
+    <header v-if="isNotePassed">
+      <input id="title" :value="name">
       <button id="put">SAVE</button>
-      <button id="del">DELETE</button>
+      <button id="del" v-on:click="delNote(curNote)">DELETE</button>
     </header>
-    <div id="editor">
-      <textarea :value="input" @input="update"></textarea>
+    <div v-if="isNotePassed" id="editor">
+      <textarea :value="doc" @input="update"></textarea>
       <div class="markup" v-html="compiledMarkdown"></div>
     </div>
+    <p v-else>Loading</p>
   </div>
 </template>
 
@@ -20,20 +21,41 @@ import _ from "lodash";
 
 export default {
   name: "NoteEditor",
+  props: ["note", "delNote"],
   data: function() {
-    return {
-      input: "# hello"
-    };
+    if (this.curNote) {
+      return {
+        name: this.curNote.name,
+        isNotePassed: true,
+        doc: this.curNote.doc,
+        id: this.curNote._id
+      };
+    } else {
+      return {
+        name: "",
+        isNotePassed: false,
+        doc: "",
+        id: ""
+      };
+    }
   },
   computed: {
     compiledMarkdown: function() {
-      return marked(this.input, { sanitize: true });
+      return marked(this.doc, { sanitize: true });
     }
   },
   methods: {
     update: _.debounce(function(e) {
-      this.input = e.target.value;
+      this.doc = e.target.value;
     }, 300)
+  },
+  watch: {
+    note: function(note) {
+      this.isNotePassed = true;
+      this.name = note.name;
+      this.doc = note.doc;
+      this.id = note._id;
+    }
   }
 };
 </script>

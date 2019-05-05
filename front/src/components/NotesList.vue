@@ -1,9 +1,9 @@
 <template>
   <div class="list">
-    <button>New note</button>
+    <button v-on:click="addNote()">New note</button>
     <ul>
       <li v-for="note in notes" v-bind:key="note._id">
-        <p>{{note.name}}</p>
+        <p v-on:click="openNote(note)">{{note.name}}</p>
       </li>
     </ul>
   </div>
@@ -13,7 +13,9 @@
 export default {
   name: "NotesList",
   props: {
-    notes: Array
+    notes: Array,
+    addNote: Function,
+    openNote: Function
   }
 };
 </script>
