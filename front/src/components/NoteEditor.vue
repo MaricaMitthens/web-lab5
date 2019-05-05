@@ -1,23 +1,39 @@
+
+
 <template>
   <div class="editor">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,
-      <br>check out the
-      <a
-        href="https://cli.vuejs.org"
-        target="_blank"
-        rel="noopener"
-      >vue-cli documentation</a>.
-    </p>
+    <header>
+      <input id="title" value="Title">
+      <button id="put">SAVE</button>
+      <button id="del">DELETE</button>
+    </header>
+    <div id="editor">
+      <textarea :value="input" @input="update"></textarea>
+      <div class="markup" v-html="compiledMarkdown"></div>
+    </div>
   </div>
 </template>
 
 <script>
+import marked from "marked";
+import _ from "lodash";
+
 export default {
   name: "NoteEditor",
-  props: {
-    msg: String
+  data: function() {
+    return {
+      input: "# hello"
+    };
+  },
+  computed: {
+    compiledMarkdown: function() {
+      return marked(this.input, { sanitize: true });
+    }
+  },
+  methods: {
+    update: _.debounce(function(e) {
+      this.input = e.target.value;
+    }, 300)
   }
 };
 </script>
@@ -25,21 +41,31 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .editor {
-  background-color: aquamarine;
   height: 95vh;
 }
-h3 {
-  margin: 40px 0 0;
+button {
+  padding: 10px;
+  margin: 10px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+input {
+  padding: 10px;
+  margin: 10px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+#editor {
+  display: flex;
+  height: 90vh;
+  padding: 10px;
+  box-sizing: border-box;
 }
-a {
-  color: #42b983;
+textarea {
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.markup {
+  flex: 1;
+  background-color: lightgrey;
+  padding: 10px;
+  box-sizing: border-box;
 }
 </style>
