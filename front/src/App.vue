@@ -1,28 +1,30 @@
 <template>
   <div id="app">
-    
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NotesList msg="Welcome to notes list"/>
+    <NoteEditor msg="Welcome to editor"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NotesList from "./components/NotesList.vue";
+import NoteEditor from "./components/NoteEditor.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    NotesList,
+    NoteEditor
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 </style>
